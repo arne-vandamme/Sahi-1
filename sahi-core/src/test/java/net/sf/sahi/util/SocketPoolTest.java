@@ -4,8 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.net.Socket;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Sahi - Web Automation and Test Tool
@@ -37,18 +38,31 @@ public class SocketPoolTest {
   /*
    * Test method for 'net.sf.sahi.util.SocketPool.get(String, int)'
    */
-  @Test
-  public void testGet() throws IOException {
-    assertTrue(pool.get().getLocalPort() == 13300);
-    pool.returnToPool(13300);
-    assertTrue(pool.get().getLocalPort() == 13301);
-    pool.returnToPool(13301);
-    assertTrue(pool.get().getLocalPort() == 13300);
-    pool.returnToPool(13300);
-    assertTrue(pool.get().getLocalPort() == 13301);
-    pool.returnToPool(13301);
-  }
+//  @Test
+//  public void testGet() throws IOException {
+//    assertTrue(pool.get().getLocalPort() == 13300);
+//    pool.returnToPool(13300);
+//    assertTrue(pool.get().getLocalPort() == 13301);
+//    pool.returnToPool(13301);
+//    assertTrue(pool.get().getLocalPort() == 13300);
+//    pool.returnToPool(13300);
+//    assertTrue(pool.get().getLocalPort() == 13301);
+//    pool.returnToPool(13301);
+//  }
 
+	@Test
+	public void testGet() throws IOException {
+		checkPortAndRelease( pool.get(), 13300 );
+		checkPortAndRelease( pool.get(), 13301 );
+		checkPortAndRelease( pool.get(), 13300 );
+
+		checkPortAndRelease( pool.get(), 13301 );
+	}
+
+	private void checkPortAndRelease( Socket socket, int expectedPort ) {
+		assertEquals( expectedPort, socket.getLocalPort() );
+		pool.release( socket );
+	}
 	/*
    * Test method for 'net.sf.sahi.util.SocketPool.release(Socket)'
 	 */

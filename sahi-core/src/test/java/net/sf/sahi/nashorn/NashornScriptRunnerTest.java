@@ -4,11 +4,11 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import net.sf.sahi.config.Configuration;
 import net.sf.sahi.session.Status;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import static org.junit.Assert.*;
@@ -167,6 +167,7 @@ public class NashornScriptRunnerTest {
     assertNotNull(result);
   }
 
+  @Ignore
   @Test
   public void getUserDataDir() {
     Configuration.init();
